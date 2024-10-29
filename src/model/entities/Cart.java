@@ -1,6 +1,7 @@
 package model.entities;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 public class Cart implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -39,5 +40,18 @@ public class Cart implements Serializable {
 
     public void setTotalValue(double totalValue) {
         this.totalValue = totalValue;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Cart cart = (Cart) o;
+        return Objects.equals(id, cart.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
     }
 }
