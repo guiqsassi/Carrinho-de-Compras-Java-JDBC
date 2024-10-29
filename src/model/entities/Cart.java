@@ -1,6 +1,8 @@
 package model.entities;
 
 import java.io.Serializable;
+import java.util.List;
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class Cart implements Serializable {
@@ -9,6 +11,7 @@ public class Cart implements Serializable {
     private Integer id;
     private Integer quantity;
     private Double totalValue;
+    private List<CartItem> items = new ArrayList<>();
 
     public Cart() {}
 
@@ -30,6 +33,10 @@ public class Cart implements Serializable {
         return quantity;
     }
 
+    public List<CartItem> getItems() {
+        return items;
+    }
+
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
@@ -40,6 +47,10 @@ public class Cart implements Serializable {
 
     public void setTotalValue(double totalValue) {
         this.totalValue = totalValue;
+    }
+
+    public void addItem(CartItem item) {
+        items.add(item);
     }
 
     @Override
