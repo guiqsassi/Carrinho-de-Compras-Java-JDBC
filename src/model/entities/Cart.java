@@ -5,9 +5,9 @@ import java.io.Serializable;
 public class Cart implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private int id;
-    private int quantity;
-    private double totalValue;
+    private Integer id;
+    private Integer quantity;
+    private Double totalValue;
 
     public Cart() {}
 
