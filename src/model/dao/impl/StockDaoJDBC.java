@@ -1,5 +1,6 @@
 package model.dao.impl;
 
+import db.Db;
 import exception.DbException;
 import model.dao.StockDao;
 import model.entities.Stock;
@@ -21,8 +22,10 @@ public class StockDaoJDBC implements StockDao {
 
     @Override
     public void insert(Stock stock) {
+            PreparedStatement ps = null;
+            ResultSet rs = null;
         try{
-            PreparedStatement ps = con.prepareStatement("INSERT INTO stock " +
+            ps = con.prepareStatement("INSERT INTO stock " +
                     "(name, category, value, quantity)" +
                     " VALUES (?, ?, ?, ?)" , PreparedStatement.RETURN_GENERATED_KEYS);
             ps.setString(1, stock.getName());
@@ -31,22 +34,26 @@ public class StockDaoJDBC implements StockDao {
             ps.setInt(4, stock.getQuantity());
 
             ps.execute();
-            ResultSet id = ps.getGeneratedKeys();
-            if(id.next()){
-                stock.setId(id.getInt(1));
+            rs = ps.getGeneratedKeys();
+            if(rs.next()){
+                stock.setId(rs.getInt(1));
             }
 
-            ps.close();
-            id.close();
+
         } catch (SQLException e) {
             throw new DbException("Insertion failed: " +e.getMessage());
+        } finally {
+            Db.closeResultSet(rs);
+            Db.closeStatement(ps);
+
         }
     }
 
     @Override
     public void update(Stock stock) {
+        PreparedStatement ps = null;
         try{
-            PreparedStatement ps = con.prepareStatement("UPDATE stock " + "SET name = ?," + " category = ?," + " value = ?," + " quantity = ?" + " WHERE id = ?");
+            ps = con.prepareStatement("UPDATE stock " + "SET name = ?," + " category = ?," + " value = ?," + " quantity = ?" + " WHERE id = ?");
             ps.setString(1, stock.getName());
             ps.setString(2, stock.getCategory().toUpperCase());
             ps.setDouble(3, stock.getPrice());
@@ -57,37 +64,42 @@ public class StockDaoJDBC implements StockDao {
 
             ps.close();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DbException("Update failed: " + e.getMessage());
+        } finally {
+            Db.closeStatement(ps);
         }
     }
 
     @Override
     public void deleteById(Integer id) {
+        PreparedStatement ps = null;
+        ResultSet rs = null;
         try{
-            PreparedStatement ps = con.prepareStatement("DELETE FROM stock " + "WHERE id = ?");
+            ps = con.prepareStatement("DELETE FROM stock " + "WHERE id = ?");
             ps.setInt(1, id);
             ps.execute();
 
-            ResultSet rs = ps.getResultSet();
+            rs = ps.getResultSet();
 
-            ps.close();
-            rs.close();
 
         }
-        catch(DbException e){
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        catch (SQLException e) {
+            throw new DbException("Deletion failed: " +e.getMessage());
+        } finally {
+            Db.closeResultSet(rs);
+            Db.closeStatement(ps);
         }
     }
 
     @Override
     public Stock findById(Integer id) {
+        PreparedStatement ps = null;
+        ResultSet rs = null;
         try{
-            PreparedStatement ps = con.prepareStatement(" SELECT id, name, value, quantity, category" + " FROM stock " + " WHERE id = ?" );
+             ps = con.prepareStatement(" SELECT id, name, value, quantity, category" + " FROM stock " + " WHERE id = ?" );
 
             ps.setInt(1, id);
-            ResultSet rs = ps.executeQuery();
+             rs = ps.executeQuery();
 
             Stock stock = new Stock();
             if(rs.next()){
@@ -96,15 +108,21 @@ public class StockDaoJDBC implements StockDao {
             return stock;
 
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DbException("Query failed: " + e.getMessage());
+        }
+        finally {
+            Db.closeResultSet(rs);
+            Db.closeStatement(ps);
         }
     }
 
     @Override
     public List<Stock> findAll() {
+        PreparedStatement ps = null;
+        ResultSet rs = null;
         try{
-            PreparedStatement ps = con.prepareStatement("SELECT id, name, category, value, quantity FROM stock");
-            ResultSet rs = ps.executeQuery();
+            ps = con.prepareStatement("SELECT id, name, category, value, quantity FROM stock");
+            rs = ps.executeQuery();
             List<Stock> stocks = new ArrayList<>();
 
             while (rs.next()) {
@@ -114,7 +132,10 @@ public class StockDaoJDBC implements StockDao {
             return stocks;
 
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DbException("Query failed: " +e.getMessage());
+        } finally {
+            Db.closeResultSet(rs);
+            Db.closeStatement(ps);
         }
     }
 
