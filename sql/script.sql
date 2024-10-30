@@ -4,9 +4,9 @@ USE desafio01;
 
 CREATE TABLE stock (
 	id INT AUTO_INCREMENT NOT NULL,
-    nome VARCHAR(150) NOT NULL,
+    name VARCHAR(150) NOT NULL,
     category VARCHAR(100) NOT NULL,
-    valor DOUBLE NOT NULL,
+    value DOUBLE NOT NULL,
     quantity INT NOT NULL,
     PRIMARY KEY(id)
     
@@ -15,7 +15,7 @@ CREATE TABLE stock (
 CREATE TABLE cart(
 	id INT AUTO_INCREMENT NOT NULL,
     quantity INT,
-    valor_total DOUBLE,
+    total_value DOUBLE,
     PRIMARY KEY(id)
 );
 
@@ -27,5 +27,5 @@ CREATE TABLE cart_item (
 	PRIMARY KEY(id),
     FOREIGN KEY(cartId) REFERENCES cart(id),
     FOREIGN KEY(stockId) REFERENCES stock(id)
-    
-)
+); 
+
