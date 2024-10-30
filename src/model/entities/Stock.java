@@ -9,16 +9,16 @@ public class Stock implements Serializable {
     private Integer id;
     private String name;
     private String category;
-    private Double valor;
+    private Double price;
     private Integer quantity;
 
     public Stock() {}
 
-    public Stock(Integer id, String name, String category, Double valor, Integer quantity) {
+    public Stock(Integer id, String name, String category, Double price, Integer quantity) {
         this.id = id;
         this.name = name;
         this.category = category;
-        this.valor = valor;
+        this.price = price;
         this.quantity = quantity;
     }
 
@@ -46,12 +46,12 @@ public class Stock implements Serializable {
         this.category = category;
     }
 
-    public Double getValor() {
-        return valor;
+    public Double getprice() {
+        return price;
     }
 
-    public void setValor(Double valor) {
-        this.valor = valor;
+    public void setprice(Double price) {
+        this.price = price;
     }
 
     public Integer getQuantity() {
