@@ -7,7 +7,7 @@ CREATE TABLE stock (
     nome VARCHAR(150) NOT NULL,
     category VARCHAR(100) NOT NULL,
     valor DOUBLE NOT NULL,
-    quantity LONG NOT NULL,
+    quantity INT NOT NULL,
     PRIMARY KEY(id)
     
 );
@@ -19,7 +19,7 @@ CREATE TABLE cart(
     PRIMARY KEY(id)
 );
 
-CREATE TABLE cart_items (
+CREATE TABLE cart_item (
 	id INT AUTO_INCREMENT NOT NULL,
 	cartId INT NOT NULL,
     stockId INT NOT NULL,
