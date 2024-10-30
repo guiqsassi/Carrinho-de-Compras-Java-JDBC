@@ -45,7 +45,20 @@ public class StockDaoJDBC implements StockDao {
 
     @Override
     public void update(Stock stock) {
+        try{
+            PreparedStatement ps = con.prepareStatement("UPDATE stock " + "SET name = ?," + " category = ?," + " value = ?," + " quantity = ?" + " WHERE id = ?");
+            ps.setString(1, stock.getName());
+            ps.setString(2, stock.getCategory().toUpperCase());
+            ps.setDouble(3, stock.getPrice());
+            ps.setInt(4, stock.getQuantity());
+            ps.setInt(5, stock.getId());
 
+            ps.execute();
+
+            ps.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
