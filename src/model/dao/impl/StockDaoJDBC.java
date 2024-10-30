@@ -25,7 +25,7 @@ public class StockDaoJDBC implements StockDao {
                     "(name, category, value, quantity)" +
                     " VALUES (?, ?, ?, ?)" , PreparedStatement.RETURN_GENERATED_KEYS);
             ps.setString(1, stock.getName());
-            ps.setString(2, stock.getCategory());
+            ps.setString(2, stock.getCategory().toUpperCase());
             ps.setDouble(3, stock.getPrice());
             ps.setInt(4, stock.getQuantity());
 
@@ -54,11 +54,41 @@ public class StockDaoJDBC implements StockDao {
 
     @Override
     public Stock findById(Integer id) {
-        return null;
+        try{
+            PreparedStatement ps = con.prepareStatement(" SELECT id, name, value, quantity, category" + " FROM stock " + " WHERE id = ?" );
+
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+
+            Stock stock = new Stock();
+            if(rs.next()){
+                stock = stockInstantialize(rs);
+            }
+            return stock;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public List<Stock> findAll() {
         return List.of();
+    }
+
+    public Stock stockInstantialize(ResultSet rs) {
+        Stock stock = new Stock();
+        try {
+            stock.setId(rs.getInt("id"));
+            stock.setName(rs.getString("name"));
+            stock.setCategory(rs.getString("category"));
+            stock.setPrice(rs.getDouble("value"));
+            stock.setQuantity(rs.getInt("quantity"));
+            return stock;
+        }
+
+        catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
