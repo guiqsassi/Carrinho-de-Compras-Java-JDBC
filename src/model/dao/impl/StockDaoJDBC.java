@@ -50,7 +50,22 @@ public class StockDaoJDBC implements StockDao {
 
     @Override
     public void deleteById(Integer id) {
+        try{
+            PreparedStatement ps = con.prepareStatement("DELETE FROM stock " + "WHERE id = ?");
+            ps.setInt(1, id);
+            ps.execute();
 
+            ResultSet rs = ps.getResultSet();
+
+            ps.close();
+            rs.close();
+
+        }
+        catch(DbException e){
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
