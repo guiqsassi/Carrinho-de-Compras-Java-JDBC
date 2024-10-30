@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class StockDaoJDBC implements StockDao {
@@ -73,7 +74,20 @@ public class StockDaoJDBC implements StockDao {
 
     @Override
     public List<Stock> findAll() {
-        return List.of();
+        try{
+            PreparedStatement ps = con.prepareStatement("SELECT id, name, category, value, quantity FROM stock");
+            ResultSet rs = ps.executeQuery();
+            List<Stock> stocks = new ArrayList<>();
+
+            while (rs.next()) {
+                stocks.add(stockInstantialize(rs));
+            }
+
+            return stocks;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public Stock stockInstantialize(ResultSet rs) {
