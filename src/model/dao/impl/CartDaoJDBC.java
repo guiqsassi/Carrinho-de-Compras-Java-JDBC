@@ -21,8 +21,43 @@ public class CartDaoJDBC implements CartDao {
     }
 
     @Override
-    public void insert(Cart cart) {
+    public void insert(Cart cart, CartItem cartItem) {
+        PreparedStatement ps = null;
+        ResultSet rs = null;
 
+        try {
+            conn.setAutoCommit(false);
+
+            //Cria um carrinho e retorna o id
+            ps = conn.prepareStatement("INSERT INTO cart VALUES ()", PreparedStatement.RETURN_GENERATED_KEYS);
+
+            ps.executeUpdate();
+            rs = ps.getGeneratedKeys();
+            rs.first();
+            int id = (rs.getInt(1));
+
+            if(id != 0) {
+                id = rs.getInt(1);
+                cart.setId(id);
+
+                //Inseri os itens iniciais no carrinho
+                ps = conn.prepareStatement("INSERT INTO cart_item (cartId, stockId, quantity) VALUES (?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
+                ps.setInt(1, id);
+                ps.setInt(2,cartItem.getStock().getId());
+                ps.setInt(3,cartItem.getQuantity());
+
+                ps.executeUpdate();
+                rs = ps.getGeneratedKeys();
+                rs.first();
+
+                cartItem.setId(rs.getInt(1));
+            }
+            conn.commit();
+            conn.setAutoCommit(true);
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -81,6 +116,7 @@ public class CartDaoJDBC implements CartDao {
 
     public Cart cartInstantiation(ResultSet rs){
         Cart cart = new Cart();
+
         try {
             cart.setId(rs.getInt("id"));
             cart.setQuantity(rs.getInt("quantity"));
