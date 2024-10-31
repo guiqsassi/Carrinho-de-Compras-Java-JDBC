@@ -35,7 +35,10 @@ public class CartDaoJDBC implements CartDao {
             conn.setAutoCommit(false);
 
             //Cria um carrinho e retorna o id
-            ps = conn.prepareStatement("INSERT INTO cart VALUES ()", PreparedStatement.RETURN_GENERATED_KEYS);
+            ps = conn.prepareStatement("INSERT INTO cart (quantity, total_value) VALUES (?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
+            ps.setInt(1, cartItem.getQuantity());
+            ps.setDouble(2, cartItem.subTotal());
+
 
             ps.executeUpdate();
             rs = ps.getGeneratedKeys();
