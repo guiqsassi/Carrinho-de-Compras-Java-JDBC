@@ -101,7 +101,27 @@ public class CartDaoJDBC implements CartDao {
 
     @Override
     public void deleteById(int id) {
+        PreparedStatement ps = null;
+        ResultSet rs = null;
 
+        try{
+            conn.setAutoCommit(false);
+
+            ps = conn.prepareStatement("DELETE FROM cart_item WHERE cartId = ?");
+            ps.setInt(1, id);
+            ps.executeUpdate();
+
+            ps = conn.prepareStatement("DELETE FROM cart WHERE id = ?");
+            ps.setInt(1, id);
+
+            ps.executeUpdate();
+
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            Db.closeStatement(ps);
+        }
     }
 
     @Override
