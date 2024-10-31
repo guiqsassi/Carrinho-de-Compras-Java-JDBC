@@ -1,6 +1,7 @@
 package model.dao.impl;
 
 import db.Db;
+import exception.StockException;
 import model.dao.CartDao;
 import model.entities.Cart;
 import model.entities.CartItem;
@@ -24,6 +25,11 @@ public class CartDaoJDBC implements CartDao {
     public void insert(Cart cart, CartItem cartItem) {
         PreparedStatement ps = null;
         ResultSet rs = null;
+        StockDaoJDBC stockDao = new StockDaoJDBC(conn);
+
+        if(cartItem.getStock().getQuantity() < cartItem.getQuantity()) {
+            throw new StockException("The requested quantity exceeds the available stock.");
+        }
 
         try {
             conn.setAutoCommit(false);
@@ -51,7 +57,14 @@ public class CartDaoJDBC implements CartDao {
                 rs.first();
 
                 cartItem.setId(rs.getInt(1));
+
+                Stock stock = cartItem.getStock();
+                stock.setQuantity(stock.getQuantity() - cartItem.getQuantity());
+                stockDao.update(stock);
+
             }
+
+
             conn.commit();
             conn.setAutoCommit(true);
 
@@ -74,7 +87,6 @@ public class CartDaoJDBC implements CartDao {
     public Cart getById(int id) {
         PreparedStatement ps = null;
         ResultSet rs = null;
-
         try{
             ps = conn.prepareStatement("SELECT cart.id, cart.quantity, cart.total_value ,cart_item.quantity as \"item_quantity\", stock.name, stock.value, stock.quantity AS \"stQuantity\"," +
                     " stock.id AS \"stId\" FROM cart inner join cart_item \n" +
