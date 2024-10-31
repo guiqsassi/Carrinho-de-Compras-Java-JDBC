@@ -46,11 +46,11 @@ public class Stock implements Serializable {
         this.category = category;
     }
 
-    public Double getprice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setprice(Double price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 

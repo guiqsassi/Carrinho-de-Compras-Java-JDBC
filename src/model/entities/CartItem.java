@@ -52,4 +52,8 @@ public class CartItem {
     public int hashCode() {
         return Objects.hashCode(id);
     }
+
+    public Double subTotal() {
+        return quantity * getStock().getPrice();
+    }
 }
