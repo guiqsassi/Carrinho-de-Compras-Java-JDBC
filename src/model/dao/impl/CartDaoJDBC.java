@@ -284,7 +284,35 @@ public class CartDaoJDBC implements CartDao {
         }
     }
 
+    public void updateCartItem(Cart cart, CartItem cartItem){
+        PreparedStatement ps = null;
+        Integer rollsAffected  = 0;
 
+        try{
+            conn.setAutoCommit(false);
+
+            ps = conn.prepareStatement("UPDATE cart_item SET quantity = ? WHERE id = ?");
+            ps.setInt(1, cartItem.getQuantity());
+            ps.setInt(2, cart.getId());
+
+            ps.executeUpdate();
+            ps = conn.prepareStatement("UPDATE cart SET total_value = ?, " + "quantity = ? WHERE id = ?");
+            ps.setDouble(1, cart.getTotalValue());
+            ps.setInt(2, cart.getQuantity());
+            ps.setInt(3, cart.getId());
+            ps.executeUpdate();
+
+            conn.commit();
+            conn.setAutoCommit(true);
+
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            Db.closeStatement(ps);
+        }
+
+    }
 
     public Cart cartInstantiation(ResultSet rs){
         Cart cart = new Cart();
