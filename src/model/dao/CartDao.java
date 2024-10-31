@@ -12,5 +12,7 @@ public interface CartDao {
     void deleteById(int id);
     Cart getById(int id);
     List<Cart> getAll();
-
+    void insertItem( Cart cart,CartItem cartItem);
+    void updateItem( Cart cart,CartItem cartItem);
+    void removeItem( Cart cart,CartItem cartItem);
 }

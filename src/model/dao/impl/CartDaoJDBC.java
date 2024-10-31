@@ -290,7 +290,7 @@ public class CartDaoJDBC implements CartDao {
         }
     }
 
-    public void updateCartItem(Cart cart, CartItem cartItem){
+    public void updateItem(Cart cart, CartItem cartItem){
         PreparedStatement ps = null;
         Integer rollsAffected  = 0;
 
