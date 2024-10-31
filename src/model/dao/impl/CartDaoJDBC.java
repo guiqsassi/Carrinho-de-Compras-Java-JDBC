@@ -225,6 +225,11 @@ public class CartDaoJDBC implements CartDao {
         PreparedStatement ps = null;
         Integer rollsAffected  = 0;
 
+        if(cartItem.getStock().getQuantity() < cartItem.getQuantity()) {
+            throw new StockException("The requested quantity exceeds the available stock.");
+        }
+
+
         try{
             conn.setAutoCommit(false);
 
@@ -258,6 +263,7 @@ public class CartDaoJDBC implements CartDao {
         PreparedStatement ps = null;
         Integer rollsAffected  = 0;
 
+
         try{
             conn.setAutoCommit(false);
 
@@ -287,6 +293,11 @@ public class CartDaoJDBC implements CartDao {
     public void updateCartItem(Cart cart, CartItem cartItem){
         PreparedStatement ps = null;
         Integer rollsAffected  = 0;
+
+        if(cartItem.getStock().getQuantity() < cartItem.getQuantity()) {
+            throw new StockException("The requested quantity exceeds the available stock.");
+        }
+
 
         try{
             conn.setAutoCommit(false);
