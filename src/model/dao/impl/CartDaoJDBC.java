@@ -79,6 +79,24 @@ public class CartDaoJDBC implements CartDao {
     @Override
     public void update(Cart cart) {
 
+        PreparedStatement ps = null;
+
+        try {
+            ps = conn.prepareStatement("UPDATE cart SET total_value = ?, " + "quantity = ? WHERE id = ?");
+            ps.setDouble(1, cart.getTotalValue());
+            ps.setInt(2, cart.getQuantity());
+            ps.setInt(3, cart.getId());
+
+            ps.executeUpdate();
+
+
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            Db.closeStatement(ps);
+        }
+
     }
 
     @Override
