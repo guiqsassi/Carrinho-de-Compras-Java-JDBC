@@ -109,4 +109,35 @@ public class CartManagement {
 
     }
 
+    public static void newClient(){
+        StockDaoJDBC stockDaoJDBC = new StockDaoJDBC(Db.getConnection());
+        CartDaoJDBC cartDaoJDBC = new CartDaoJDBC(Db.getConnection());
+        Scanner sc = new Scanner(System.in);
+        List<Stock> stocks = stockDaoJDBC.findAll();
+
+
+        CartItem cartItem = new CartItem();
+        Cart cart = new Cart();
+
+        System.out.println("Choose your first item!: \n");
+        System.out.println(stocks);
+
+        int stockId = sc.nextInt();
+
+        for (Stock stock : stocks) {
+            if(stock.getId() == stockId){
+                cartItem.setStock(stock);
+            }
+        }
+
+        System.out.println("Enter the quantity: ");
+        cartItem.setQuantity(sc.nextInt());
+
+
+        cartDaoJDBC.insert(cart, cartItem);
+
+        System.out.println("Your new Cart id is: " + cart.getId());
+
+    }
+
 }

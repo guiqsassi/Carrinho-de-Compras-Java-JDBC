@@ -69,6 +69,7 @@ public class Ui {
             userOption = sc.nextInt();
             switch (userOption){
                 case 1: CartManagement(userOption, sc); break;
+                case 2: CartManagement.newClient(); break;
             }
         }
     }
@@ -78,8 +79,6 @@ public class Ui {
 
         System.out.println("Write your cart id: ");
         cartId = sc.nextInt();
-
-
 
         while (userOption != 0){
 
