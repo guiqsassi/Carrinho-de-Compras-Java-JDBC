@@ -132,9 +132,10 @@ public class CartDaoJDBC implements CartDao {
         ResultSet rs = null;
         try{
             ps = conn.prepareStatement("SELECT cart_item.id as \"ciId\", cart.id, cart.quantity, cart.total_value ,cart_item.quantity as \"item_quantity\", stock.name, stock.value, stock.quantity AS \"stQuantity\"," +
-                    " stock.id AS \"stId\" FROM cart inner join cart_item \n" +
+                    " stock.id AS \"stId\" FROM cart " +
+                    "LEFT join cart_item \n" +
                     "ON cart.id = cart_item.cartId\n" +
-                    "INNER JOIN stock\n" +
+                    "LEFT JOIN stock\n" +
                     "ON cart_item.stockId = stock.id" +
                     " WHERE cart.id = ?");
 
@@ -146,6 +147,7 @@ public class CartDaoJDBC implements CartDao {
             if(rs.next()) {
                 cart = cartInstantiation(rs);
             }
+
             HashMap<Integer, Stock> stocks = new HashMap<Integer, Stock>();
 
 
