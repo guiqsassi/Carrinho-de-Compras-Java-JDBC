@@ -300,23 +300,20 @@ public class CartDaoJDBC implements CartDao {
             throw new StockException("The requested quantity exceeds the available stock.");
         }
 
-
         try{
-            conn.setAutoCommit(false);
+
 
             ps = conn.prepareStatement("UPDATE cart_item SET quantity = ? WHERE id = ?");
             ps.setInt(1, cartItem.getQuantity());
-            ps.setInt(2, cart.getId());
+            ps.setInt(2, cartItem.getId());
 
             ps.executeUpdate();
+
             ps = conn.prepareStatement("UPDATE cart SET total_value = ?, " + "quantity = ? WHERE id = ?");
             ps.setDouble(1, cart.getTotalValue());
             ps.setInt(2, cart.getQuantity());
             ps.setInt(3, cart.getId());
             ps.executeUpdate();
-
-            conn.commit();
-            conn.setAutoCommit(true);
 
 
         } catch (SQLException e) {
@@ -324,6 +321,7 @@ public class CartDaoJDBC implements CartDao {
         } finally {
             Db.closeStatement(ps);
         }
+
 
     }
 
