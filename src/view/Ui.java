@@ -27,7 +27,7 @@ public class Ui {
 
             switch(userOptions){
                 case 1: stockManagement(userOptions, sc); break;
-                case 2: break;
+                case 2: shopping(userOptions, sc); break;
 
             }
 
@@ -61,6 +61,44 @@ public class Ui {
 
 
     }
+    private static void shopping(int userOption, Scanner sc){
+        while (userOption != 0){
+            System.out.println("Welcome to our store, select your option by writing a number");
+            System.out.println("\n1) Manage my cart");
+            System.out.println("2) New client");
+            userOption = sc.nextInt();
+            switch (userOption){
+                case 1: CartManagement(userOption, sc); break;
+            }
+        }
+    }
 
+    private static void CartManagement(int userOption, Scanner sc){
+        int cartId;
+
+        System.out.println("Write your cart id: ");
+        cartId = sc.nextInt();
+
+
+
+        while (userOption != 0){
+
+
+
+            System.out.println("\n 1) Add item to my cart");
+            System.out.println("2) Show the items in my cart");
+            System.out.println("3) Insert an item into my cart");
+            System.out.println("4) Remove an item from my cart");
+            System.out.println("5) Update an item in my cart");
+            System.out.println("0) exit");
+
+            userOption = sc.nextInt();
+            switch (userOption){
+                case 1: CartManagement.inserCartItem(cartId); break;
+                case 2: CartManagement.deleteCartItem(cartId); break;
+             }
+
+        }
+    }
 
 }
