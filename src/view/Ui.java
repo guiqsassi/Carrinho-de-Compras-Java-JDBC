@@ -85,17 +85,18 @@ public class Ui {
 
 
 
-            System.out.println("\n 1) Add item to my cart");
+            System.out.println("\n1) Add item to my cart");
             System.out.println("2) Show the items in my cart");
-            System.out.println("3) Insert an item into my cart");
-            System.out.println("4) Remove an item from my cart");
-            System.out.println("5) Update an item in my cart");
+            System.out.println("3) Remove an item from my cart");
+            System.out.println("4) Update an item in my cart");
             System.out.println("0) exit");
 
             userOption = sc.nextInt();
             switch (userOption){
                 case 1: CartManagement.inserCartItem(cartId); break;
-                case 2: CartManagement.deleteCartItem(cartId); break;
+                case 2: CartManagement.showItems(cartId); break;
+                case 3: CartManagement.deleteCartItem(cartId); break;
+                case 4: CartManagement.updateCartItem(cartId); break;
              }
 
         }

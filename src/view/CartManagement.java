@@ -65,7 +65,47 @@ public class CartManagement {
             throw new RuntimeException("Item not found");
         }
         cartDaoJDBC.removeItem(cart, selectedCartItem);
-        System.out.println("Item removido com sucesso");
+        System.out.println("Item successfully removed");
+
+    }
+    public static void showItems(int id){
+        CartDaoJDBC cartDaoJDBC = new CartDaoJDBC(Db.getConnection());
+
+        Cart cart = cartDaoJDBC.getById(id);
+
+        cart.getItems().forEach(System.out::println);
+
+    }
+    public static void updateCartItem(int id){
+        CartDaoJDBC cartDaoJDBC = new CartDaoJDBC(Db.getConnection());
+        Scanner sc = new Scanner(System.in);
+        int itemId;
+        Cart cart = cartDaoJDBC.getById(id);
+
+        System.out.println("Choose one item from bellow: \n");
+        cart.getItems().forEach(System.out::println);
+        itemId = sc.nextInt();
+        CartItem selectedCartItem = new CartItem();
+
+        for (CartItem cartItem : cart.getItems()) {
+            if(cartItem.getId() == itemId){
+                selectedCartItem = cartItem;
+            }
+        }
+
+        cart.setQuantity( cart.getQuantity() - selectedCartItem.getQuantity() );
+        cart.setTotalValue(cart.getTotalValue() - selectedCartItem.subTotal());
+
+        System.out.println("Choose a new quantity for this item:");
+        selectedCartItem.setQuantity(sc.nextInt());
+
+        cart.setQuantity(cart.getQuantity() + selectedCartItem.getQuantity());
+        cart.setTotalValue(cart.getTotalValue() + selectedCartItem.subTotal());
+
+        cartDaoJDBC.updateItem(cart, selectedCartItem);
+
+        System.out.println("Item sucessfully updated");
+
 
     }
 
