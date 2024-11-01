@@ -52,6 +52,7 @@ public class Ui {
             switch(userOption){
                 case 1: StockManagement.addStock(); break;
                 case 2: StockManagement.deleteItem(); break;
+                case 3: StockManagement.updateItem(); break;
                 case 4: StockManagement.listItems(); break;
 
             }
