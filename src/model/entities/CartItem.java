@@ -56,4 +56,10 @@ public class CartItem {
     public Double subTotal() {
         return quantity * getStock().getPrice();
     }
+
+    @Override
+    public String toString() {
+        return
+                "id: " + id +", Item:" + stock.getName() +", quantity:" + quantity + ", price: " + subTotal();
+    }
 }
