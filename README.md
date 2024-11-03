@@ -52,8 +52,18 @@ _Para instalar este projeto você precisa:_
    ou
    abra o script com o MySql workbench
 
+   
+3. É necessario inserir as informações de acesso ao banco de dados no arquivo: db.properties
+   
+   <br>exemplo: 
+     ```sh
+   user=teste
+   password=123
+   dburl=jdbc:mysql://localhost3306/desafio01
+   useSSL=false
+   ```
 
-3. Inicializar a aplicação rodando o arquivo src/Main.java em uma Idea
+4. Inicializar a aplicação rodando o arquivo src/Main.java em uma Idea
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
