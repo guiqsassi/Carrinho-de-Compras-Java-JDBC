@@ -53,6 +53,21 @@ public class Cart implements Serializable {
         items.add(item);
     }
 
+    public void updateItem(CartItem item) {
+
+        items.set(items.indexOf(item), item);
+        int quantity = 0;
+        double totalValue =0;
+
+        for(CartItem aux : items){
+            quantity += aux.getQuantity();
+            totalValue += aux.subTotal();
+        }
+
+        this.quantity = quantity;
+        this.totalValue = totalValue;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -65,4 +80,7 @@ public class Cart implements Serializable {
     public int hashCode() {
         return Objects.hashCode(id);
     }
+
+
+
 }
