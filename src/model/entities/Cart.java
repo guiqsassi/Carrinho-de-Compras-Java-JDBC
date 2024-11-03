@@ -51,6 +51,18 @@ public class Cart implements Serializable {
 
     public void addItem(CartItem item) {
         items.add(item);
+
+        int quantity = 0;
+        double totalValue =0;
+
+        for (CartItem aux : items) {
+            quantity += aux.getQuantity();
+            totalValue += aux.subTotal();
+        }
+
+        this.quantity = quantity;
+        this.totalValue = totalValue;
+
     }
 
     public void updateItem(CartItem item) {
@@ -59,7 +71,7 @@ public class Cart implements Serializable {
         int quantity = 0;
         double totalValue =0;
 
-        for(CartItem aux : items){
+        for (CartItem aux : items) {
             quantity += aux.getQuantity();
             totalValue += aux.subTotal();
         }
