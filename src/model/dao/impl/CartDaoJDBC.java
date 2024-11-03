@@ -300,6 +300,8 @@ public class CartDaoJDBC implements CartDao {
             throw new StockException("The requested quantity exceeds the available stock.");
         }
 
+        cart.updateItem(cartItem);
+
         try{
 
 
