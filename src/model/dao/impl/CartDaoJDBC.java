@@ -189,34 +189,42 @@ public class CartDaoJDBC implements CartDao {
 
         PreparedStatement ps = null;
         ResultSet rs = null;
+        ResultSet rsItem = null;
         try{
-            ps = conn.prepareStatement("SELECT cart_item.id as \"ciId\", cart.id, cart.quantity, cart.total_value ,cart_item.quantity as \"item_quantity\", stock.name, stock.value, stock.quantity AS \"stQuantity\"," +
-                    " stock.id AS \"stId\" FROM cart inner join cart_item \n" +
-                    "ON cart.id = cart_item.cartId\n" +
-                    "INNER JOIN stock\n" +
-                    "ON cart_item.stockId = stock.id");
+
+            HashMap<Integer, Cart> carts = new HashMap<Integer, Cart>();
+            ps = conn.prepareStatement("SELECT * FROM cart");
 
             rs = ps.executeQuery();
 
-            HashMap<Integer, Cart> carts = new HashMap<Integer, Cart>();
+            while (rs.next()) {
+                carts.put(rs.getInt("id"), cartInstantiation(rs));
+
+            }
+
+
+            ps = conn.prepareStatement("SELECT cart_item.cartId,cart_item.id, cart_item.quantity AS \"item_quantity\", stock.name, stock.value, stock.quantity as stQuantity, stock.id as StId \n" +
+                    " FROM cart_item" +
+                    " INNER JOIN stock" +
+                    " ON cart_item.stockId = stock.id;");
+
+            rsItem = ps.executeQuery();
+
             HashMap<Integer, Stock> stocks = new HashMap<>();
 
-            while(rs.next()) {
-                if(!carts.containsKey(rs.getInt(1))) {
-                    carts.put(rs.getInt(1), cartInstantiation(rs));
-
-                }
+            while(rsItem.next()) {
                 CartItem item;
-                if(stocks.containsKey(rs.getInt("stId"))){
-                    item = cartItemInstantiation(rs, stocks.get(rs.getInt("stId")));
+                if(stocks.containsKey(rsItem.getInt("stId"))){
+                    item = cartItemInstantiation(rsItem, stocks.get(rsItem.getInt("stId")));
 
                 }else{
                     Stock aux = new Stock();
-                    item = cartItemInstantiation(rs, aux);
+                    item = cartItemInstantiation(rsItem, aux);
                     stocks.put(aux.getId(), aux);
                 }
-                carts.get(rs.getInt(1)).addItem(item);
+                carts.get(rsItem.getInt("cartId")).addItem(item);
             }
+
             List<Cart> cartsList = new ArrayList<>();
             for(Cart cart : carts.values()) {
                 cartsList.add(cart);
@@ -228,6 +236,7 @@ public class CartDaoJDBC implements CartDao {
         } finally {
             Db.closeResultSet(rs);
             Db.closeStatement(ps);
+            Db.closeResultSet(rsItem);
         }
     }
 
