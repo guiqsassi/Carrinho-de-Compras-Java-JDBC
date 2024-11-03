@@ -51,7 +51,15 @@ public class Cart implements Serializable {
 
     public void addItem(CartItem item) {
         items.add(item);
+        updateQuantityAndTotalValue();
+    }
 
+    public void removeItem(CartItem item) {
+        items.remove(item);
+        updateQuantityAndTotalValue();
+    }
+
+    public void updateQuantityAndTotalValue(){
         int quantity = 0;
         double totalValue =0;
 
@@ -62,22 +70,12 @@ public class Cart implements Serializable {
 
         this.quantity = quantity;
         this.totalValue = totalValue;
-
     }
 
     public void updateItem(CartItem item) {
 
         items.set(items.indexOf(item), item);
-        int quantity = 0;
-        double totalValue =0;
-
-        for (CartItem aux : items) {
-            quantity += aux.getQuantity();
-            totalValue += aux.subTotal();
-        }
-
-        this.quantity = quantity;
-        this.totalValue = totalValue;
+        updateQuantityAndTotalValue();
     }
 
     @Override

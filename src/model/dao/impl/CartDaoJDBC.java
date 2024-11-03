@@ -264,7 +264,7 @@ public class CartDaoJDBC implements CartDao {
     public void removeItem(Cart cart, CartItem cartItem) {
         PreparedStatement ps = null;
         Integer rollsAffected  = 0;
-
+        cart.removeItem(cartItem);
 
         try{
             conn.setAutoCommit(false);
@@ -275,8 +275,8 @@ public class CartDaoJDBC implements CartDao {
             rollsAffected = ps.executeUpdate();
 
             ps = conn.prepareStatement("UPDATE cart SET total_value = ?, " + "quantity = ? WHERE id = ?");
-            ps.setDouble(1, cart.getTotalValue() - cartItem.subTotal());
-            ps.setInt(2, cart.getQuantity() - cartItem.getQuantity());
+            ps.setDouble(1, cart.getTotalValue());
+            ps.setInt(2, cart.getQuantity());
             ps.setInt(3, cart.getId());
             ps.executeUpdate();
 
