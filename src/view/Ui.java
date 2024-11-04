@@ -85,7 +85,7 @@ public class Ui {
 
 
             System.out.println("\n1) Add item to my cart");
-            System.out.println("2) Show the items in my cart");
+            System.out.println("2) Display my cart information");
             System.out.println("3) Remove an item from my cart");
             System.out.println("4) Update an item in my cart");
             System.out.println("0) exit");
