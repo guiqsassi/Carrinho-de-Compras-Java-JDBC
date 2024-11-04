@@ -27,52 +27,24 @@ public class CartDaoJDBC implements CartDao {
     }
 
     @Override
-    public void insert(Cart cart, CartItem cartItem) {
+    public void insert(Cart cart) {
         PreparedStatement ps = null;
         ResultSet rs = null;
         StockDaoJDBC stockDao = new StockDaoJDBC(conn);
 
-        if(cartItem.getStock().getQuantity() < cartItem.getQuantity()) {
-            throw new StockException("The requested quantity exceeds the available stock.");
-        }
-
         try {
-            conn.setAutoCommit(false);
 
             //Cria um carrinho e retorna o id
-            ps = conn.prepareStatement("INSERT INTO cart (quantity, total_value) VALUES (?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
-            ps.setInt(1, cartItem.getQuantity());
-            ps.setDouble(2, cartItem.subTotal());
-
-
+            ps = conn.prepareStatement("INSERT INTO cart (quantity, total_value) VALUES (0, 0)", PreparedStatement.RETURN_GENERATED_KEYS);
             ps.executeUpdate();
             rs = ps.getGeneratedKeys();
             rs.first();
+
             int id = (rs.getInt(1));
-
-            if(id != 0) {
-                id = rs.getInt(1);
-                cart.setId(id);
-
-                //Inseri os itens iniciais no carrinho
-                ps = conn.prepareStatement("INSERT INTO cart_item (cartId, stockId, quantity) VALUES (?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
-                ps.setInt(1, id);
-                ps.setInt(2,cartItem.getStock().getId());
-                ps.setInt(3,cartItem.getQuantity());
-
-                ps.executeUpdate();
-                rs = ps.getGeneratedKeys();
-                rs.first();
-
-                cartItem.setId(rs.getInt(1));
+            cart.setId(id);
 
 
 
-            }
-
-
-            conn.commit();
-            conn.setAutoCommit(true);
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
