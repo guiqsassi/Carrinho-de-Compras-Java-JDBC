@@ -50,7 +50,7 @@ _Para instalar este projeto você precisa:_
    mysql -u [usuario] -p[senha] [nome_do_banco] < sql/script.sql
    ```
    ou
-   abra o script com o MySql workbench
+   execute o script com o MySql workbench
 
 
 3. É necessario inserir as informações de acesso ao banco de dados no arquivo: db.properties
