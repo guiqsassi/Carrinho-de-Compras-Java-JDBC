@@ -87,6 +87,7 @@ public class StockDaoJDBC implements StockDao {
             ps.execute();
 
             con.commit();
+            con.setAutoCommit(true);
             rs = ps.getResultSet();
 
 
