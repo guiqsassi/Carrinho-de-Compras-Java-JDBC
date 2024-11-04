@@ -6,7 +6,7 @@
 <br />
 <div align="center">
 
-  <h3 align="center">Carrinho de compras java</h3>
+<h3 align="center">Carrinho de compras java</h3>
 
   <p align="center">
     <br />
@@ -16,14 +16,14 @@
 
 <!-- ABOUT THE PROJECT -->
 ## 📌 Sobre o projeto
-  O projeto tem como foco principal simular um carrinho de compras de um e-commerce, nele você pode
-cadastrar e gerenciar diversos produtos com informações como: preço, quantidade em estoque e categoria, além de cadastrar um carrinho de compras
-adcionando e gerenciando produtos, é possivel consultar informações sobre o carrinho, obtendo dados como: valor total do pedido
-e quantidade de itens no carrinho
+O projeto tem como foco principal simular um carrinho de compras de um e-commerce.
+Nele, você pode cadastrar e gerenciar diversos produtos com informações como preço, quantidade em estoque e categoria.
+Além disso, é possível cadastrar um carrinho de compras, adicionando e gerenciando produtos.
+É possível consultar informações sobre o carrinho, obtendo dados como valor total do pedido e quantidade de itens no carrinho.
 
 ### 🛠️ Construído com
 
-* ![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white)
+![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white)
 ![MySQL](https://img.shields.io/badge/mysql-4479A1.svg?style=for-the-badge&logo=mysql&logoColor=white)
 ![Git](https://img.shields.io/badge/GIT-E44C30?style=for-the-badge&logo=git&logoColor=white)
 
@@ -35,7 +35,7 @@ e quantidade de itens no carrinho
 
 ### 📋 Pré-requisitos
 
-É necessário ter JDK, JVM e MySql instalados em sua máquina para rodar esse projeto
+É necessário ter JDK-17, JVM e MySql instalados em sua máquina para rodar esse projeto
 
 ### 🔧 Instalação
 
@@ -45,17 +45,16 @@ _Para instalar este projeto você precisa:_
    ```sh
    git clone https://github.com/guiqsassi/Carrinho-de-Compras-Java-JDBC.git
    ```
-2. Rodar o script do banco de dados 
+2. Rodar o script do banco de dados
    ```sh
    mysql -u [usuario] -p[senha] [nome_do_banco] < sql/script.sql
    ```
    ou
    abra o script com o MySql workbench
 
-   
+
 3. É necessario inserir as informações de acesso ao banco de dados no arquivo: db.properties
-   
-   <br>exemplo: 
+   <br>exemplo:
      ```sh
    user=teste
    password=123
@@ -63,11 +62,10 @@ _Para instalar este projeto você precisa:_
    useSSL=false
    ```
 
-4. Inicializar a aplicação rodando o arquivo src/Main.java em uma Idea
+4. Inicializar a aplicação rodando o arquivo src/Main.java em uma IDE com suporte a java
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 
 
 
