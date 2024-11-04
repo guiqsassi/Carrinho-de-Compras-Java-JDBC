@@ -1,6 +1,9 @@
 package view;
 
 import db.Db;
+import model.dao.CartDao;
+import model.dao.DaoFactory;
+import model.dao.StockDao;
 import model.dao.impl.CartDaoJDBC;
 import model.dao.impl.StockDaoJDBC;
 import model.entities.Cart;
@@ -12,10 +15,10 @@ import java.util.Scanner;
 
 public class CartManagement {
 
-    public static void inserCartItem(int id){
+    public static void insertCartItem(int id){
 
-        StockDaoJDBC stockDaoJDBC = new StockDaoJDBC(Db.getConnection());
-        CartDaoJDBC cartDaoJDBC = new CartDaoJDBC(Db.getConnection());
+        StockDao stockDaoJDBC = new DaoFactory().createStockDao();
+        CartDao cartDaoJDBC = new DaoFactory().createCartDao();
         Scanner sc = new Scanner(System.in);
         List<Stock> stocks = stockDaoJDBC.findAll();
 
@@ -43,7 +46,7 @@ public class CartManagement {
     }
 
     public static void deleteCartItem(int id){
-        CartDaoJDBC cartDaoJDBC = new CartDaoJDBC(Db.getConnection());
+        CartDao cartDaoJDBC = new DaoFactory().createCartDao();
         Scanner sc = new Scanner(System.in);
         int itemId;
         Cart cart = cartDaoJDBC.getById(id);
@@ -69,7 +72,7 @@ public class CartManagement {
 
     }
     public static void showItems(int id){
-        CartDaoJDBC cartDaoJDBC = new CartDaoJDBC(Db.getConnection());
+        CartDao cartDaoJDBC = new DaoFactory().createCartDao();
 
         Cart cart = cartDaoJDBC.getById(id);
 
@@ -80,7 +83,7 @@ public class CartManagement {
 
     }
     public static void updateCartItem(int id){
-        CartDaoJDBC cartDaoJDBC = new CartDaoJDBC(Db.getConnection());
+        CartDao cartDaoJDBC = new DaoFactory().createCartDao();
         Scanner sc = new Scanner(System.in);
         int itemId;
         Cart cart = cartDaoJDBC.getById(id);
@@ -113,8 +116,8 @@ public class CartManagement {
     }
 
     public static void newClient(){
-        StockDaoJDBC stockDaoJDBC = new StockDaoJDBC(Db.getConnection());
-        CartDaoJDBC cartDaoJDBC = new CartDaoJDBC(Db.getConnection());
+        StockDao stockDaoJDBC = new DaoFactory().createStockDao();
+        CartDao cartDaoJDBC = new DaoFactory().createCartDao();
         Scanner sc = new Scanner(System.in);
         List<Stock> stocks = stockDaoJDBC.findAll();
 

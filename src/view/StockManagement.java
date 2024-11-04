@@ -1,6 +1,8 @@
 package view;
 
 import db.Db;
+import model.dao.DaoFactory;
+import model.dao.StockDao;
 import model.dao.impl.StockDaoJDBC;
 import model.entities.Stock;
 
@@ -10,7 +12,7 @@ import java.util.Scanner;
 public class StockManagement {
 
     public static void listItems(){
-        StockDaoJDBC stockDaoJDBC = new StockDaoJDBC(Db.getConnection());
+        StockDao stockDaoJDBC = new DaoFactory().createStockDao();
 
         List<Stock> stocks = stockDaoJDBC.findAll();
 
@@ -19,7 +21,7 @@ public class StockManagement {
 
     public static void addStock(){
         Scanner sc = new Scanner(System.in);
-        StockDaoJDBC stockDaoJDBC = new StockDaoJDBC(Db.getConnection());
+        StockDao stockDaoJDBC = new DaoFactory().createStockDao();
 
         Stock stock = new Stock();
         System.out.println("Write the product´s name: ");
@@ -39,7 +41,7 @@ public class StockManagement {
 
     public static void deleteItem(){
         Scanner sc = new Scanner(System.in);
-        StockDaoJDBC stockDaoJDBC = new StockDaoJDBC(Db.getConnection());
+        StockDao stockDaoJDBC = new DaoFactory().createStockDao();
 
         int id ;
         List<Stock> stocks = stockDaoJDBC.findAll();
@@ -56,7 +58,7 @@ public class StockManagement {
 
     public static void updateItem(){
         Scanner sc = new Scanner(System.in);
-        StockDaoJDBC stockDaoJDBC = new StockDaoJDBC(Db.getConnection());
+        StockDao stockDaoJDBC = new DaoFactory().createStockDao();
         List<Stock> stocks = stockDaoJDBC.findAll();
         stocks.forEach(stock -> System.out.println( stock.toString()));
 
