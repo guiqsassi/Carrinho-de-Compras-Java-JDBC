@@ -16,12 +16,11 @@ public class Ui {
 
         while(userOptions != 0){
 
-            System.out.println("Welcome to our store, select your option by writing a number: ");
+            System.out.println("Welcome to our store, select your option by writing a number: \n");
 
-            System.out.println("\n1) Product Management");
-            System.out.println("\n2) Shopping");
-
-            System.out.println("\n0) Exit");
+            System.out.println("1) Product Management");
+            System.out.println("2) Shopping");
+            System.out.println("0) Exit");
 
             userOptions = sc.nextInt();
 
