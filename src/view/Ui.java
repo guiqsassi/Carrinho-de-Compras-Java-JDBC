@@ -92,7 +92,7 @@ public class Ui {
 
             userOption = sc.nextInt();
             switch (userOption){
-                case 1: CartManagement.inserCartItem(cartId); break;
+                case 1: CartManagement.insertCartItem(cartId); break;
                 case 2: CartManagement.showItems(cartId); break;
                 case 3: CartManagement.deleteCartItem(cartId); break;
                 case 4: CartManagement.updateCartItem(cartId); break;
