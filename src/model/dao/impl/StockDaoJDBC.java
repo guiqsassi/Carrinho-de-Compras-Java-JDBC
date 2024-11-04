@@ -22,8 +22,8 @@ public class StockDaoJDBC implements StockDao {
 
     @Override
     public void insert(Stock stock) {
-            PreparedStatement ps = null;
-            ResultSet rs = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
         try{
             ps = con.prepareStatement("INSERT INTO stock " +
                     "(name, category, value, quantity)" +
@@ -74,11 +74,19 @@ public class StockDaoJDBC implements StockDao {
     public void deleteById(Integer id) {
         PreparedStatement ps = null;
         ResultSet rs = null;
+
         try{
+            con.setAutoCommit(false);
+
+            ps = con.prepareStatement("DELETE FROM cart_item " + "WHERE stockId = ?");
+            ps.setInt(1, id);
+            ps.execute();
+
             ps = con.prepareStatement("DELETE FROM stock " + "WHERE id = ?");
             ps.setInt(1, id);
             ps.execute();
 
+            con.commit();
             rs = ps.getResultSet();
 
 
@@ -96,10 +104,10 @@ public class StockDaoJDBC implements StockDao {
         PreparedStatement ps = null;
         ResultSet rs = null;
         try{
-             ps = con.prepareStatement(" SELECT id, name, value, quantity, category" + " FROM stock " + " WHERE id = ?" );
+            ps = con.prepareStatement(" SELECT id, name, value, quantity, category" + " FROM stock " + " WHERE id = ?" );
 
             ps.setInt(1, id);
-             rs = ps.executeQuery();
+            rs = ps.executeQuery();
 
             Stock stock = new Stock();
             if(rs.next()){
