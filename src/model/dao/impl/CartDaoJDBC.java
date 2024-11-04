@@ -180,6 +180,7 @@ public class CartDaoJDBC implements CartDao {
         } finally {
             Db.closeResultSet(rs);
             Db.closeStatement(ps);
+            Db.closeResultSet(rsItem);
         }
 
     }
