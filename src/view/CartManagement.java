@@ -73,6 +73,9 @@ public class CartManagement {
 
         Cart cart = cartDaoJDBC.getById(id);
 
+        System.out.println("Total quantity of items: " + cart.getQuantity() + " Cart total price:: " + cart.getTotalValue() +"\n");
+
+        System.out.println("Itens: ");
         cart.getItems().forEach(System.out::println);
 
     }
